@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".CameraActivity">
+
+<Button
+    android:id="@+id/btn_detect"
+    android:layout_width="104dp"
+    android:layout_height="101dp"
+    android:layout_alignParentBottom="true"
+    android:layout_marginLeft="150dp"
+    android:layout_marginBottom="45dp"
+    android:background="@drawable/camera" />
+
+<com.wonderkiln.camerakit.CameraView
+    android:id="@+id/camera_view"
+    android:layout_above="@+id/btn_detect"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></com.wonderkiln.camerakit.CameraView>
+
+<com.example.beau.Helper.GraphicOverlay
+    android:id="@+id/graphic_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/btn_detect"
+    android:layout_marginBottom="-32dp" />
+</RelativeLayout>

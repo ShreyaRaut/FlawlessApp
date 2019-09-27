@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "54161195756",
+    "firebase_url": "https://beau-1b783.firebaseio.com",
+    "project_id": "beau-1b783",
+    "storage_bucket": "beau-1b783.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54161195756:android:f35b314dc8cab559",
+        "android_client_info": {
+          "package_name": "com.example.beau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54161195756-7ln7g21vllma0e80rurplah5pqnbl4m8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.beau",
+            "certificate_hash": "4c4ca668ebec5ae295fefc8da718a2aa12775163"
+          }
+        },
+        {
+          "client_id": "54161195756-0m5lohf2g7n7skpsa8chl10jnfcoq8n2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0ItX_IQsPe9TfNY_2O0wQ_1IknRutGgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54161195756-0m5lohf2g7n7skpsa8chl10jnfcoq8n2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
