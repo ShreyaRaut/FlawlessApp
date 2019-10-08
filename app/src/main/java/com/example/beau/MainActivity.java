@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -47,7 +48,12 @@ public class MainActivity extends AppCompatActivity {
     EditText password;
     Button signup;
     TextView login;
-    FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth mFirebaseAuth;
+//    /private FirebaseAuth.AuthStateListener mAuthStateListener;
+
+
+
+
 
 
 
@@ -79,11 +85,40 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         name = findViewById(R.id.in_name);
         email = findViewById(R.id.in_email);
+
         password = findViewById(R.id.in_pwd);
         signup = findViewById((R.id.btn_signup));
         login = findViewById(R.id.link_login);
 
 
+//        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if(mFirebaseAuth.getCurrentUser()!=null)
+        {
+//            Toast.makeText(MainActivity.this,"You are logged in!",Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(getApplicationContext(),InfoActivity.class));
+        }
+
+
+//        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//
+////                else
+////                {
+//////                    Toast.makeText(LoginActivity.this,"Please login!",Toast.LENGTH_SHORT).show();
+////                }
+//            }
+//        };
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(i);
+            }
+        });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,46 +130,54 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Authenticating...");
                 progressDialog.show();
 
-                String emailid = email.getText().toString();
-                String pwd = password.getText().toString();
 
-                if(emailid.isEmpty())
-                {
-                    email.setError("Required");
-                    email.requestFocus();
-                }
-                else if(pwd.isEmpty())
-                {
-                    password.setError("Required");
-                    password.requestFocus();
-                }
-                else if(emailid.isEmpty() && pwd.isEmpty())
-                {
-                    Toast.makeText(MainActivity.this,"Fields are empty!",Toast.LENGTH_SHORT).show();
-                }
-                else if(!(emailid.isEmpty() && pwd.isEmpty()))
-                {
-                    mFirebaseAuth.createUserWithEmailAndPassword(emailid,pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            System.out.print("Inside 110-MA");
-                            if(!task.isSuccessful())
-                            {
-                                System.out.print("Inside 112-MA");
-                                Toast.makeText(MainActivity.this,"Sign up unsuccessful,please try again.",Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                System.out.print("Inside 116-MA");
-                                startActivity(new Intent(MainActivity.this,CameraActivity.class));
+                    String emailid = email.getText().toString();
+                    String pwd = password.getText().toString();
 
+                    if(emailid.isEmpty())
+                    {
+                        email.setError("Required");
+                        email.requestFocus();
+                        return;
+                    }
+                    else if(pwd.isEmpty())
+                    {
+                        password.setError("Required");
+                        password.requestFocus();
+                        return;
+                    }
+                    else if(emailid.isEmpty() && pwd.isEmpty())
+                    {
+                        Toast.makeText(MainActivity.this,"Fields are empty!",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else if(!(emailid.isEmpty() && pwd.isEmpty()))
+                    {
+                        mFirebaseAuth.createUserWithEmailAndPassword(emailid,pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                System.out.print("Inside 110-MA");
+                                if(!task.isSuccessful())
+                                {
+                                    System.out.print("Inside 112-MA");
+                                    Toast.makeText(MainActivity.this,"Sign up unsuccessful,please try again.",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                else{
+                                    System.out.print("Inside 116-MA");
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                                }
                             }
-                        }
-                    });
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this,"Error occured!",Toast.LENGTH_SHORT).show();
-                }
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this,"Error occured!",Toast.LENGTH_SHORT).show();
+                    }
+
+
+
 
 
 //                public void onSignupSuccess() {
@@ -146,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
                 new android.os.Handler().postDelayed(
                         new Runnable() {
                             public void run() {
-                                // On complete call either onSignupSuccess or onSignupFailed
-                                // depending on success
                                 signup.setEnabled(true);
                                 setResult(RESULT_OK, null);
                                 finish();
@@ -160,19 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
-
-
-
-
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(i);
-            }
-        });
+//
 
 //        cameraView=(CameraView)findViewById(R.id.camera_view);
 //        graphicOverlay=(GraphicOverlay)findViewById(R.id.graphic_overlay);

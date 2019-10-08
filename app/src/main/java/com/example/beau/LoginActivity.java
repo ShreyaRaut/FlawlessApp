@@ -45,13 +45,13 @@ public class LoginActivity extends AppCompatActivity {
                 if(mFirebaseUser!=null)
                 {
                     Toast.makeText(LoginActivity.this,"You are logged in!",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this,CameraActivity.class);
-                    startActivity(i);
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),InfoActivity.class));
                 }
-                else
-                {
-                    Toast.makeText(LoginActivity.this,"Please login!",Toast.LENGTH_SHORT).show();
-                }
+//                else
+//                {
+////                    Toast.makeText(LoginActivity.this,"Please login!",Toast.LENGTH_SHORT).show();
+//                }
             }
         };
 
@@ -89,7 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else{
                                 System.out.print("Inside 91-LA");
-                                startActivity(new Intent(LoginActivity.this,CameraActivity.class));
+                                finish();
+                                startActivity(new Intent(getApplicationContext(),InfoActivity.class));
 
                             }
                         }
