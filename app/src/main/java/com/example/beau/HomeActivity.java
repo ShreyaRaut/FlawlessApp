@@ -1,5 +1,6 @@
 package com.example.beau;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,6 +9,8 @@ import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,9 +20,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    FirebaseAuth firebaseAuth;
+    Button routine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,27 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()==null)
+        {
+            finish();
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
+        FirebaseUser user=firebaseAuth.getCurrentUser();
+
+        routine=(Button) findViewById(R.id.routine);
+
+        routine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(HomeActivity.this,RoutineActivity.class);
+                startActivity(i);
+
+            }
+
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -87,13 +115,20 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent i= new Intent(HomeActivity.this,CameraActivity.class);
+            startActivity(i);
+        } else if (id == R.id.details) {
+            Intent i= new Intent(HomeActivity.this,InfoActivity.class);
+            startActivity(i);
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        }else if(id==R.id.logout){
+            firebaseAuth.signOut();
+            Intent i= new Intent(HomeActivity.this,LoginActivity.class);
+            finish();
+            startActivity(i);
+        }
+        else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

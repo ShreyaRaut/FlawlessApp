@@ -142,6 +142,13 @@ public class InfoActivity extends AppCompatActivity {
                 databaseReference.child(user.getUid()).setValue(customer);
                 Toast.makeText(InfoActivity.this,"Information Saved!",Toast.LENGTH_SHORT).show();
 
+//                Toast.makeText(LoginActivity.this,"You are logged in!",Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+//
+//                Intent i= new Intent(InfoActivity.this,HomeActivity.class);
+//                startActivity(i);
+
 
 
 
