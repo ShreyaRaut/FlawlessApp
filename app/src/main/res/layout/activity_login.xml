@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FFF2EEF4"
+    android:background="@drawable/bg1"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -16,15 +16,15 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:paddingTop="56dp"
+        android:paddingTop="100dp"
         android:paddingRight="24dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/logo" />
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="72dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginBottom="24dp"-->
+<!--            android:src="@drawable/logo1" />-->
 
         <!--  Email Label -->
         <!--<android.support.design.widget.TextInputLayout-->
