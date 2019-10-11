@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@drawable/bg4"
+    android:background="@drawable/bg9"
     tools:context=".HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
@@ -13,9 +13,11 @@
         android:id="@+id/routine"
         android:layout_width="194dp"
         android:layout_height="100dp"
-        android:background="@color/colorAccent"
+        android:background="#DDB4C3"
         android:text="Routine"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="93dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
