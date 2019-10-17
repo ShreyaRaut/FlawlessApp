@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg9"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".InstMoActivity"
+    tools:showIn="@layout/activity_inst_mo">
+
+    <TextView
+        android:id="@+id/inst1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Use a gentle cleanser designed for your skin type.You will find a list of personlised cleansing products with our routine."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/inst2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/inst2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Splash your face with water"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/inst3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/inst3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. Use your fingertips to gently rub one pump of cleanser on your face using small circular motions."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.411"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/inst4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. Do not scrub, use fingernails, or a rough cloth while cleansing as it may traumatize your skin."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="321dp" />
+
+    <TextView
+        android:id="@+id/inst5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5. Rinse your face with lukewarm water"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/inst4"
+        app:layout_constraintVertical_bias="0.424"
+        tools:layout_editor_absoluteX="-71dp" />
+
+    <TextView
+        android:id="@+id/inst6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="6. Pat dry with a soft towel."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="480dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

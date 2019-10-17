@@ -10,12 +10,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
-public class CombFwActivity extends AppCompatActivity {
+public class InstBpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comb_fw);
+        setContentView(R.layout.activity_inst_bp);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

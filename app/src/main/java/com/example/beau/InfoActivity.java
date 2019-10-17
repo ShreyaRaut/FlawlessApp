@@ -48,9 +48,9 @@ public class InfoActivity extends AppCompatActivity {
 
         FirebaseUser user=firebaseAuth.getCurrentUser();
 
-        textView2=(TextView) findViewById(R.id.textView2);
-
-        textView2.setText("Welcome "+user.getEmail());
+//        textView2=(TextView) findViewById(R.id.textView2);
+//
+//        textView2.setText("Welcome "+user.getEmail());
         linkskintype=findViewById(R.id.linkskintype);
 
 
@@ -74,19 +74,6 @@ public class InfoActivity extends AppCompatActivity {
 
 
 
-        button2=(Button) findViewById(R.id.button2);
-
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                Intent i= new Intent(InfoActivity.this,LoginActivity.class);
-                finish();
-                startActivity(i);
-
-            }
-
-        });
 
 
         linkskintype.setOnClickListener(new View.OnClickListener() {

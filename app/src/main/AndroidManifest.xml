@@ -10,9 +10,37 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ProdAgActivity"
+            android:label="@string/title_activity_prod_ag"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ProdMoActivity"
+            android:label="@string/title_activity_prod_mo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProdBpActivity"
+            android:label="@string/title_activity_prod_bp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InstAgActivity"
+            android:label="@string/title_activity_inst_ag"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InstMoActivity"
+            android:label="@string/title_activity_inst_mo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InstBpActivity"
+            android:label="@string/title_activity_inst_bp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InstFwActivity"
+            android:label="@string/title_activity_inst_fw"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".CombFwActivity"
             android:label="@string/title_activity_comb_fw"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RoutineActivity"
             android:label="@string/title_activity_routine"
