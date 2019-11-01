@@ -35,7 +35,7 @@
                 android:layout_width="183dp"
                 android:layout_height="250dp"
                 android:layout_marginRight="20dp"
-                app:srcCompat="@drawable/bg4"
+                app:srcCompat="@drawable/clean"
                 tools:layout_editor_absoluteX="25dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -43,7 +43,7 @@
                 android:id="@+id/imageButton4"
                 android:layout_width="183dp"
                 android:layout_height="250dp"
-                app:srcCompat="@drawable/bg3" />
+                app:srcCompat="@drawable/benz" />
 
         </LinearLayout>
 
@@ -60,13 +60,13 @@
                 android:layout_width="183dp"
                 android:layout_height="250dp"
                 android:layout_marginRight="20dp"
-                app:srcCompat="@drawable/bg4" />
+                app:srcCompat="@drawable/gel" />
 
             <ImageButton
                 android:id="@+id/imageButton5"
                 android:layout_width="183dp"
                 android:layout_height="250dp"
-                app:srcCompat="@drawable/bg3" />
+                app:srcCompat="@drawable/ngel" />
 
         </LinearLayout>
     </LinearLayout>
