@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
 
-            Intent i= new Intent(HomeActivity.this,CameraActivity.class);
+            Intent i= new Intent(HomeActivity.this,DetectorActivity.class);
             startActivity(i);
         } else if (id == R.id.details) {
             Intent i= new Intent(HomeActivity.this,InfoActivity.class);
