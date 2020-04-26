@@ -688,8 +688,8 @@ public abstract class CameraActivity extends AppCompatActivity
 //        FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
 //                .getVisionFaceDetector(options);
 //
-//        detector.detectInImage(image)
-//                .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>() {
+//        detector.detectInImage()
+//                .addOnSuccessListeimagener(new OnSuccessListener<List<FirebaseVisionFace>>() {
 //                    @Override
 //                    public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
 //                        processFaceResult(firebaseVisionFaces);

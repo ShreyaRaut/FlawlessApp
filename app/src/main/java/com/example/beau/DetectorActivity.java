@@ -54,8 +54,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   // Configuration values for the prepackaged SSD model.
   private static final int TF_OD_API_INPUT_SIZE = 300;
   private static final boolean TF_OD_API_IS_QUANTIZED = true;
-  private static final String TF_OD_API_MODEL_FILE = "detect.tflite";
-  private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/labelmap.txt";
+  private static final String TF_OD_API_MODEL_FILE = "detectxx.tflite";
+  private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/labelmapx.txt";
   private static final DetectorMode MODE = DetectorMode.TF_OD_API;
   // Minimum detection confidence to track a detection.
   private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
@@ -215,8 +215,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             tracker.trackResults(mappedRecognitions, currTimestamp);
             trackingOverlay.postInvalidate();
 
-            computingDetection = false;
 
+            computingDetection = false;
             runOnUiThread(
                 new Runnable() {
                   @Override
