@@ -21,6 +21,7 @@ package com.example.beau;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -47,6 +48,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +57,38 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import java.nio.ByteBuffer;
 import com.example.beau.env.ImageUtils;
 import com.example.beau.env.Logger;
+
+import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.beau.Helper.GraphicOverlay;
+import com.example.beau.Helper.RectOverlay;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.wonderkiln.camerakit.CameraKitError;
+import com.wonderkiln.camerakit.CameraKitEvent;
+import com.wonderkiln.camerakit.CameraKitEventListener;
+import com.wonderkiln.camerakit.CameraKitImage;
+import com.wonderkiln.camerakit.CameraKitVideo;
+import com.wonderkiln.camerakit.CameraView;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import dmax.dialog.SpotsDialog;
+
+import com.example.beau.CameraConnectionFragment;
+
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public abstract class CameraActivity extends AppCompatActivity
@@ -89,6 +123,21 @@ public abstract class CameraActivity extends AppCompatActivity
     private ImageView plusImageView, minusImageView;
     private SwitchCompat apiSwitchCompat;
     private TextView threadsTextView;
+//
+//    private final OnImageAvailableListener imageListener;
+//    /** The input size in pixels desired by TensorFlow (width and height of a square bitmap). */
+//    private final Size inputSize;
+//    /** The layout identifier to inflate for this Fragment. */
+//    private final int layout;
+//
+//    private final CameraConnectionFragment.ConnectionCallback cameraConnectionCallback;
+
+    CameraView cameraView;
+    GraphicOverlay graphicOverlay;
+    Button btnDetect;
+
+    AlertDialog waitingDialog;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -171,6 +220,47 @@ public abstract class CameraActivity extends AppCompatActivity
 
         plusImageView.setOnClickListener(this);
         minusImageView.setOnClickListener(this);
+
+//        cameraView=(CameraView)findViewById(R.id.camera_view);
+//        graphicOverlay=(GraphicOverlay)findViewById(R.id.graphic_overlay);
+        btnDetect=(Button)findViewById(R.id.btn_detect);
+//        waitingDialog=new SpotsDialog.Builder().setContext(this)
+//                .setMessage("Please wait")
+//                .setCancelable(false)
+//                .build();
+
+//        btnDetect.setOnClickListener((view) -> {
+//            CameraConnectionFragment.takePicture();
+//
+//        });
+
+        btnDetect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                    CameraConnectionFragment c =
+//                            CameraConnectionFragment.newInstance(
+//                                    new CameraConnectionFragment.ConnectionCallback() {
+//                                        @Override
+//                                        public void onPreviewSizeChosen(final Size size, final int rotation) {
+//                                            previewHeight = size.getHeight();
+//                                            previewWidth = size.getWidth();
+//                                            CameraActivity.this.onPreviewSizeChosen(size, rotation);
+//                                        }
+//                                    },
+//                                    null,
+//                                    getLayoutId(),
+//                                    getDesiredPreviewFrameSize());
+//
+//
+//                    c.takePicture();
+
+                Intent i= new Intent(CameraActivity.this,TrackerActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     protected int[] getRgbBytes() {
@@ -228,7 +318,7 @@ public abstract class CameraActivity extends AppCompatActivity
                         isProcessingFrame = false;
                     }
                 };
-        processImage();
+//        processImage();
     }
 
     /** Callback for Camera2 API */
@@ -286,7 +376,7 @@ public abstract class CameraActivity extends AppCompatActivity
                         }
                     };
 
-            processImage();
+//            processImage();
         } catch (final Exception e) {
             LOGGER.e(e, "Exception!");
             Trace.endSection();
@@ -404,16 +494,6 @@ public abstract class CameraActivity extends AppCompatActivity
         try {
             String i = null;
 
-//            for (final String cameraId : manager.getCameraIdList()){
-//                final CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
-//                final Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-//                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
-//                    i=cameraId;
-//                    break;
-//                }
-//            }
-//
-//            return i;
 
             for (final String cameraId : manager.getCameraIdList()) {
                 final CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
@@ -430,19 +510,6 @@ public abstract class CameraActivity extends AppCompatActivity
                 if (map == null) {
                     continue;
                 }
-
-//                int cameraId = -1;
-//                // Search for the front facing camera
-//                int numberOfCameras = Camera.getNumberOfCameras();
-//                for (int i = 0; i < numberOfCameras; i++) {
-//                    CameraInfo info = new CameraInfo();
-//                    Camera.getCameraInfo(i, info);
-//                    if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-//                        Log.d(DEBUG_TAG, "Camera found");
-//                        cameraId = i;
-//                        break;
-//                    }
-//                }
 
                 // Fallback to camera1 API for internal cameras that don't have full support.
                 // This should help with legacy situations where using the camera2 API causes
@@ -578,149 +645,150 @@ public abstract class CameraActivity extends AppCompatActivity
 
     protected abstract void setUseNNAPI(boolean isChecked);
 }
+/*
+import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
-//import android.app.AlertDialog;
-//import android.graphics.Bitmap;
-//import android.graphics.Rect;
-//import android.os.Bundle;
-//import android.widget.Button;
-//import android.widget.Toast;
-//
-//import com.example.beau.Helper.GraphicOverlay;
-//import com.example.beau.Helper.RectOverlay;
-//import com.google.android.gms.tasks.OnFailureListener;
-//import com.google.android.gms.tasks.OnSuccessListener;
-//import com.google.firebase.ml.vision.FirebaseVision;
-//import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-//import com.google.firebase.ml.vision.face.FirebaseVisionFace;
-//import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
-//import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
-//import com.wonderkiln.camerakit.CameraKitError;
-//import com.wonderkiln.camerakit.CameraKitEvent;
-//import com.wonderkiln.camerakit.CameraKitEventListener;
-//import com.wonderkiln.camerakit.CameraKitImage;
-//import com.wonderkiln.camerakit.CameraKitVideo;
-//import com.wonderkiln.camerakit.CameraView;
-//
-//import java.util.List;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import dmax.dialog.SpotsDialog;
-//
-//public class CameraActivity extends AppCompatActivity {
-//
-//    CameraView cameraView;
-//    GraphicOverlay graphicOverlay;
-//    Button btnDetect;
-//
-//    AlertDialog waitingDialog;
-//
-//    @Override
-//    protected void onResume()
-//    {
-//        super.onResume();
-//        cameraView.start();
-//    }
-//
-//    @Override
-//    protected void onPause()
-//    {
-//        super.onPause();
-//        cameraView.stop();
-//    }
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_camera);
-//
-//        cameraView=(CameraView)findViewById(R.id.camera_view);
-//        graphicOverlay=(GraphicOverlay)findViewById(R.id.graphic_overlay);
-//        btnDetect=(Button)findViewById(R.id.btn_detect);
-//        waitingDialog=new SpotsDialog.Builder().setContext(this)
-//                .setMessage("Please wait")
-//                .setCancelable(false)
-//                .build();
-//
-//        btnDetect.setOnClickListener((view) -> {
-//            cameraView.start();
-//            cameraView.captureImage();
-//            graphicOverlay.clear();
-//        });
-//
-//        cameraView.addCameraKitListener(new CameraKitEventListener() {
-//            @Override
-//            public void onEvent(CameraKitEvent cameraKitEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onError(CameraKitError cameraKitError) {
-//
-//            }
-//
-//            @Override
-//            public void onImage(CameraKitImage cameraKitImage) {
-//                waitingDialog.show();
-//
-//                Bitmap bitmap = cameraKitImage.getBitmap();
-//                bitmap= Bitmap.createScaledBitmap(bitmap,cameraView.getWidth(),cameraView.getHeight(),false);
-//                cameraView.stop();
-//
-//                runFaceDetector(bitmap);
-//
-//            }
-//
-//            @Override
-//            public void onVideo(CameraKitVideo cameraKitVideo) {
-//
-//            }
-//        });
-//    }
-//
-//    private void runFaceDetector(Bitmap bitmap) {
-//        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
-//
-//        FirebaseVisionFaceDetectorOptions options = new FirebaseVisionFaceDetectorOptions.Builder()
-//                .build();
-//
-//        FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
-//                .getVisionFaceDetector(options);
-//
-//        detector.detectInImage()
-//                .addOnSuccessListeimagener(new OnSuccessListener<List<FirebaseVisionFace>>() {
-//                    @Override
-//                    public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
-//                        processFaceResult(firebaseVisionFaces);
-//
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(CameraActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//
-//    }
-//
-//    private void processFaceResult(List<FirebaseVisionFace> firebaseVisionFaces) {
-//        int count=0;
-//
-//        for(FirebaseVisionFace face : firebaseVisionFaces)
-//        {
-//            Rect bounds = face.getBoundingBox();
-//            //Draw Rect
-//            RectOverlay rect = new RectOverlay(graphicOverlay,bounds);
-//            graphicOverlay.add(rect);
-//
-//            count++;
-//        }
-//
-//        waitingDialog.dismiss();
-//        Toast.makeText(this,String.format("Detected %d faces in image",count),Toast.LENGTH_SHORT).show();
-//    }
-//
-//}
+import com.example.beau.Helper.GraphicOverlay;
+import com.example.beau.Helper.RectOverlay;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.wonderkiln.camerakit.CameraKitError;
+import com.wonderkiln.camerakit.CameraKitEvent;
+import com.wonderkiln.camerakit.CameraKitEventListener;
+import com.wonderkiln.camerakit.CameraKitImage;
+import com.wonderkiln.camerakit.CameraKitVideo;
+import com.wonderkiln.camerakit.CameraView;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import dmax.dialog.SpotsDialog;
+
+public class CameraActivity extends AppCompatActivity {
+
+    CameraView cameraView;
+    GraphicOverlay graphicOverlay;
+    Button btnDetect;
+
+    AlertDialog waitingDialog;
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        cameraView.start();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        cameraView.stop();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_camera);
+
+        cameraView=(CameraView)findViewById(R.id.camera_view);
+        graphicOverlay=(GraphicOverlay)findViewById(R.id.graphic_overlay);
+        btnDetect=(Button)findViewById(R.id.btn_detect);
+        waitingDialog=new SpotsDialog.Builder().setContext(this)
+                .setMessage("Please wait")
+                .setCancelable(false)
+                .build();
+
+        btnDetect.setOnClickListener((view) -> {
+            cameraView.start();
+            cameraView.captureImage();
+            graphicOverlay.clear();
+        });
+
+        cameraView.addCameraKitListener(new CameraKitEventListener() {
+            @Override
+            public void onEvent(CameraKitEvent cameraKitEvent) {
+
+            }
+
+            @Override
+            public void onError(CameraKitError cameraKitError) {
+
+            }
+
+            @Override
+            public void onImage(CameraKitImage cameraKitImage) {
+                waitingDialog.show();
+
+                Bitmap bitmap = cameraKitImage.getBitmap();
+                bitmap= Bitmap.createScaledBitmap(bitmap,cameraView.getWidth(),cameraView.getHeight(),false);
+                cameraView.stop();
+
+                runFaceDetector(bitmap);
+
+            }
+
+            @Override
+            public void onVideo(CameraKitVideo cameraKitVideo) {
+
+            }
+        });
+    }
+
+    private void runFaceDetector(Bitmap bitmap) {
+        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
+
+        FirebaseVisionFaceDetectorOptions options = new FirebaseVisionFaceDetectorOptions.Builder()
+                .build();
+
+        FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
+                .getVisionFaceDetector(options);
+
+        detector.detectInImage()
+                .addOnSuccessListeimagener(new OnSuccessListener<List<FirebaseVisionFace>>() {
+                    @Override
+                    public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
+                        processFaceResult(firebaseVisionFaces);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CameraActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
+    private void processFaceResult(List<FirebaseVisionFace> firebaseVisionFaces) {
+        int count=0;
+
+        for(FirebaseVisionFace face : firebaseVisionFaces)
+        {
+            Rect bounds = face.getBoundingBox();
+            //Draw Rect
+            RectOverlay rect = new RectOverlay(graphicOverlay,bounds);
+            graphicOverlay.add(rect);
+
+            count++;
+        }
+
+        waitingDialog.dismiss();
+        Toast.makeText(this,String.format("Detected %d faces in image",count),Toast.LENGTH_SHORT).show();
+    }
+
+}
+*/
